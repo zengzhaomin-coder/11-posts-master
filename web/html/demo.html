@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>我的博客</title>
+    <!-- 提供基本的样式、布局、组件 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css">
+
+    <!-- 提供额外的，跟交互有关的组件功能，弹出层、tab 页切换 -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
+    <style>
+        .wrapper {
+            margin-top: 30px;
+        }
+        .hot-tags, .hot-posts {
+            border: 1px solid grey;
+            height: 100px;
+            padding: 1em;
+            margin-top: 1em;
+            margin-bottom: 2em;
+        }
+        .others {
+            margin-top: 1em;
+            padding-top: 2em;
+            min-height: 80px;
+            background: #eeeeee;
+        }
+        .posts {
+            padding-right: 2em;
+        }
+        .post-header {
+            display: flex;
+            align-items: center;
+        }
+        .post-header img {
+            width: 100%;
+        }
+        .post {
+            margin-bottom: 2em;
+            padding-bottom: 2em;
+            border-bottom: 1px solid #eee;
+        }
+        .post-footer {
+            margin-top: 1em;
+        }
+        #addPostModal img {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <section>
+        <nav class="navbar navbar-default" role="navigation">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">My name is blog</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">首页 <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">学习</a></li>
+                            <li><a href="#">娱乐</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">军事</a></li>
+                            <li><a href="#">科技</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">分类 <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">学习</a></li>
+                            <li><a href="#">娱乐</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">军事</a></li>
+                            <li><a href="#">科技</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">标签 <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">学习</a></li>
+                            <li><a href="#">娱乐</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">军事</a></li>
+                            <li><a href="#">科技</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">关于 <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">学习</a></li>
+                            <li><a href="#">娱乐</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">军事</a></li>
+                            <li><a href="#">科技</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">其它 <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">学习</a></li>
+                            <li><a href="#">娱乐</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">军事</a></li>
+                            <li><a href="#">科技</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <form class="navbar-form navbar-left" role="search">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="搜索内容">
+                    </div>
+                    <button type="submit" class="btn btn-default">搜索</button>
+                </form>
+                <ul class="nav navbar-nav navbar-right" style="padding-right: 1em">
+                    <li>
+                        <a href="#">用户管理</a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="#" data-target="#addPostModal" data-toggle="modal">添加博客</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </section>
+    <section class="container wrapper">
+        <div class="row">
+            <div class="col-md-9 main">
+                <div class="posts">
+                    <div class="post">
+                        <div class="post-header row">
+                            <div class="col-md-8">
+                                <h3>水浒传</h3>
+                                <p>《水浒传》，中国四大名著之一，是一部以北宋末年宋江起义为主要故事背景、类型上属于英雄传奇的章回体长篇小说。作者或编者一般被认为是施耐庵，现存刊本署名大多有施耐庵、罗贯中两人中的一人，或两人皆有。
+                                    全书以农民起义的发生、发展过程为主线，通过各个英雄被逼上梁山的不同经历，描写出他们由个体觉醒到走上小规模联合反抗，到发展为盛大的农民起义队伍的全过程，表现了“官逼民反”这一封建时代农民起义的必然规律，塑造了农民起义领袖的群体形象，深刻反映出北宋末年的政治状况和社会矛盾。
+                                    作者站在被压迫者一边，歌颂了农民起义领袖们劫富济贫、除暴安良的正义行为，肯定了他们敢于造反、敢于斗争的革命精神。
+                                    宋江原是一位周急扶困的义士，当他被逼上梁山之后，壮大了起义军的声威，取得了一系列胜利。但由于他性格的二重性和思想的局限性，在起义事业登上巅峰之时选择了妥协、招安，最终葬送了起义事业。小说通过宋江起义的失败客观上总结了封建时代农民起义失败的经验教训。
+                                    小说以高俅发迹作为故事的开端，意在表明“乱自上作”，高俅是封建统治集团的代表人物。作者还写了大批的贪官污吏和地方恶霸，正是他们狼狈为奸，鱼肉百姓，才迫使善良而正直的人们不得不挺而走险，奋起反抗。
+                                    同时，小说还对田虎、王庆、方腊等其他地区的农民起义军作了一定的侧面描写，从广度和深度两方面深刻地挖掘出了封建时代的各种社会现象和问题，以及农民起义的深层原因。
+                                </p>
+                            </div>
+                            <div class="col-md-4">
+                                <img src="../img/18.jpg">
+                            </div>
+                        </div>
+                        <div class="post-footer row">
+                            <div class="col-md-1 post-author">张三</div>
+                            <div class="col-md-3 post-time">发布于 <i>2001-10-23</i></div>
+                            <div class="col-md-4"></div>
+                            <div class="col-md-4">
+                                <span class="post-like">点赞 (<i>10</i>) </span>
+                                <span class="post-comment">评论 (<i>17</i>) </span>
+                                <span class="post-share">分享 (<i>20</i>) </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="post">
+                        <div class="post-header row">
+                            <div class="col-md-8">
+                                <h3>水浒传</h3>
+                                <p>《水浒传》，中国四大名著之一，是一部以北宋末年宋江起义为主要故事背景、类型上属于英雄传奇的章回体长篇小说。作者或编者一般被认为是施耐庵，现存刊本署名大多有施耐庵、罗贯中两人中的一人，或两人皆有。
+                                    全书以农民起义的发生、发展过程为主线，通过各个英雄被逼上梁山的不同经历，描写出他们由个体觉醒到走上小规模联合反抗，到发展为盛大的农民起义队伍的全过程，表现了“官逼民反”这一封建时代农民起义的必然规律，塑造了农民起义领袖的群体形象，深刻反映出北宋末年的政治状况和社会矛盾。
+                                    作者站在被压迫者一边，歌颂了农民起义领袖们劫富济贫、除暴安良的正义行为，肯定了他们敢于造反、敢于斗争的革命精神。
+                                    宋江原是一位周急扶困的义士，当他被逼上梁山之后，壮大了起义军的声威，取得了一系列胜利。但由于他性格的二重性和思想的局限性，在起义事业登上巅峰之时选择了妥协、招安，最终葬送了起义事业。小说通过宋江起义的失败客观上总结了封建时代农民起义失败的经验教训。
+                                    小说以高俅发迹作为故事的开端，意在表明“乱自上作”，高俅是封建统治集团的代表人物。作者还写了大批的贪官污吏和地方恶霸，正是他们狼狈为奸，鱼肉百姓，才迫使善良而正直的人们不得不挺而走险，奋起反抗。
+                                    同时，小说还对田虎、王庆、方腊等其他地区的农民起义军作了一定的侧面描写，从广度和深度两方面深刻地挖掘出了封建时代的各种社会现象和问题，以及农民起义的深层原因。</p>
+                            </div>
+                            <div class="col-md-4">
+                                <img src="../img/18.jpg">
+                            </div>
+                        </div>
+                        <div class="post-footer row">
+                            <div class="col-md-1 post-author">张三</div>
+                            <div class="col-md-3 post-time">发布于 <i>2001-10-23</i></div>
+                            <div class="col-md-4"></div>
+                            <div class="col-md-4">
+                                <span class="post-like">点赞 (<i>10</i>) </span>
+                                <span class="post-comment">评论 (<i>17</i>) </span>
+                                <span class="post-share">分享 (<i>20</i>) </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="post">
+                        <div class="post-header row">
+                            <div class="col-md-8">
+                                <h3>水浒传</h3>
+                                <p>《水浒传》，中国四大名著之一，是一部以北宋末年宋江起义为主要故事背景、类型上属于英雄传奇的章回体长篇小说。作者或编者一般被认为是施耐庵，现存刊本署名大多有施耐庵、罗贯中两人中的一人，或两人皆有。
+                                    全书以农民起义的发生、发展过程为主线，通过各个英雄被逼上梁山的不同经历，描写出他们由个体觉醒到走上小规模联合反抗，到发展为盛大的农民起义队伍的全过程，表现了“官逼民反”这一封建时代农民起义的必然规律，塑造了农民起义领袖的群体形象，深刻反映出北宋末年的政治状况和社会矛盾。
+                                    作者站在被压迫者一边，歌颂了农民起义领袖们劫富济贫、除暴安良的正义行为，肯定了他们敢于造反、敢于斗争的革命精神。
+                                    宋江原是一位周急扶困的义士，当他被逼上梁山之后，壮大了起义军的声威，取得了一系列胜利。但由于他性格的二重性和思想的局限性，在起义事业登上巅峰之时选择了妥协、招安，最终葬送了起义事业。小说通过宋江起义的失败客观上总结了封建时代农民起义失败的经验教训。
+                                    小说以高俅发迹作为故事的开端，意在表明“乱自上作”，高俅是封建统治集团的代表人物。作者还写了大批的贪官污吏和地方恶霸，正是他们狼狈为奸，鱼肉百姓，才迫使善良而正直的人们不得不挺而走险，奋起反抗。
+                                    同时，小说还对田虎、王庆、方腊等其他地区的农民起义军作了一定的侧面描写，从广度和深度两方面深刻地挖掘出了封建时代的各种社会现象和问题，以及农民起义的深层原因。</p>
+                            </div>
+                            <div class="col-md-4">
+                                <img src="../img/18.jpg">
+                            </div>
+                        </div>
+                        <div class="post-footer row">
+                            <div class="col-md-1 post-author">张三</div>
+                            <div class="col-md-3 post-time">发布于 <i>2001-10-23</i></div>
+                            <div class="col-md-4"></div>
+                            <div class="col-md-4">
+                                <span class="post-like">点赞 (<i>10</i>) </span>
+                                <span class="post-comment">评论 (<i>17</i>) </span>
+                                <span class="post-share">分享 (<i>20</i>) </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="post">
+                        <div class="post-header row">
+                            <div class="col-md-8">
+                                <h3>水浒传</h3>
+                                <p>《水浒传》，中国四大名著之一，是一部以北宋末年宋江起义为主要故事背景、类型上属于英雄传奇的章回体长篇小说。作者或编者一般被认为是施耐庵，现存刊本署名大多有施耐庵、罗贯中两人中的一人，或两人皆有。
+                                    全书以农民起义的发生、发展过程为主线，通过各个英雄被逼上梁山的不同经历，描写出他们由个体觉醒到走上小规模联合反抗，到发展为盛大的农民起义队伍的全过程，表现了“官逼民反”这一封建时代农民起义的必然规律，塑造了农民起义领袖的群体形象，深刻反映出北宋末年的政治状况和社会矛盾。
+                                    作者站在被压迫者一边，歌颂了农民起义领袖们劫富济贫、除暴安良的正义行为，肯定了他们敢于造反、敢于斗争的革命精神。
+                                    宋江原是一位周急扶困的义士，当他被逼上梁山之后，壮大了起义军的声威，取得了一系列胜利。但由于他性格的二重性和思想的局限性，在起义事业登上巅峰之时选择了妥协、招安，最终葬送了起义事业。小说通过宋江起义的失败客观上总结了封建时代农民起义失败的经验教训。
+                                    小说以高俅发迹作为故事的开端，意在表明“乱自上作”，高俅是封建统治集团的代表人物。作者还写了大批的贪官污吏和地方恶霸，正是他们狼狈为奸，鱼肉百姓，才迫使善良而正直的人们不得不挺而走险，奋起反抗。
+                                    同时，小说还对田虎、王庆、方腊等其他地区的农民起义军作了一定的侧面描写，从广度和深度两方面深刻地挖掘出了封建时代的各种社会现象和问题，以及农民起义的深层原因。</p>
+                            </div>
+                            <div class="col-md-4">
+                                <img src="../img/18.jpg">
+                            </div>
+                        </div>
+                        <div class="post-footer row">
+                            <div class="col-md-1 post-author">张三</div>
+                            <div class="col-md-3 post-time">发布于 <i>2001-10-23</i></div>
+                            <div class="col-md-4"></div>
+                            <div class="col-md-4">
+                                <span class="post-like">点赞 (<i>10</i>) </span>
+                                <span class="post-comment">评论 (<i>17</i>) </span>
+                                <span class="post-share">分享 (<i>20</i>) </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 aside">
+                <div class="hot-tags">
+                    热门标签
+                </div>
+                <div class="hot-posts">
+                    点击排行
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="others">
+        <p class="text-center">
+            版权所有: 南方 IT 学院 163 班
+        </p>
+    </section>
+
+    <div class="modal fade" id="addPostModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">添加博客</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <form>
+                                <div class="form-group">
+                                    <label for="post-title">标题</label>
+                                    <input type="text" class="form-control" id="post-title" placeholder="请输入标题">
+                                </div>
+                                <div class="form-group">
+                                    <label for="post-content">内容</label>
+                                    <textarea class="form-control" id="post-content" placeholder="请输入内容"></textarea>
+                                </div>
+                                <div class="form-group" style="display: none">
+                                    <input type="file" id="post-cover">
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-md-4">
+                            <img src="../img/18.jpg">
+                            <p>
+                                请点击选择图片
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+    </script>
+</body>
+</html>
